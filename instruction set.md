@@ -404,7 +404,7 @@ dest = -dest - 1;
 לא משתנים
 
 ## NEG ##
-הפיכת מספר לשלילי (ע"י משלים ל2)
+הפיכת מספר שלילי לחיובי וחיובי לשלילי (ע"י שיטת המשלים ל2)
 ```nasm
 neg dest
 ```
@@ -638,9 +638,9 @@ shl/sal dest, number; dest = dest * cmath.pow(2, number)
 shr/sar dest, number; dest = dest / cmath.pow(2, number) 
 ```
 
-| code                                           | explain                                              |
-|------------------------------------------------|------------------------------------------------------|
-| `shl/sal/shr/sar r8/m8/r16/m16/r32/m32 cl/im8` | source is ax, result is al and reminder is ah        |
+| code                                           | explain |
+|------------------------------------------------|---------|
+| `shl/sal/shr/sar r8/m8/r16/m16/r32/m32 cl/im8` |         |
 
 הפעולה:
 ```c
@@ -679,9 +679,9 @@ L - Left, R - right
 rol/rcl/ror/rcr dest, number 
 ```
 
-| code                                           | explain                                              |
-|------------------------------------------------|------------------------------------------------------|
-| `rol/rcl/ror/rcr r8/m8/r16/m16/r32/m32 cl/im8` | source is ax, result is al and reminder is ah        |
+| code                                           | explain |
+|------------------------------------------------|---------|
+| `rol/rcl/ror/rcr r8/m8/r16/m16/r32/m32 cl/im8` |         |
 
 מסובב את הביטים כשאר כולל את דגל הנשא או לא 
 
@@ -934,6 +934,37 @@ repne scasb
 פעולת הrep מבצעת את הפעולה שיש בתוכה ecx פעמים  
 פעולת הrepe\repz מבצעת את הפעולה שיש בתוכה ecx פעמים וכל עד דגל האפס המוחזר מהפעולה הוא 1
 פעולת הrepne\repnz מבצעת את הפעולה שיש בתוכה ecx פעמים וכל עד דגל האפס המוחזר מהפעולה הוא 0
+
+```c
+// rep method
+while(ecx > 0)
+{
+    ecx--;
+    method();
+}
+
+// repe/repz method
+while(ecx > 0)
+{
+    ecx--;
+    method();
+    if(zf != 1)
+    {
+        break;
+    }
+}
+
+// repne/repnz method
+while(ecx > 0)
+{
+    ecx--;
+    method();
+    if(zf == 1)
+    {
+        break;
+    }
+}
+```
 
 ## PUSH / PUSHA / PUSHF ##
 push (all) (flags) to the stack  
